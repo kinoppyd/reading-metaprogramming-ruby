@@ -6,20 +6,16 @@ class TryOut
   # upcase_full_nameメソッドを持つ。これは、full_nameメソッドの結果をすべて大文字で返す。このメソッドは副作用を持たない。
   # upcase_full_name! メソッドを持つ。これは、upcase_full_nameの副作用を持つバージョンで、ファーストネーム、ミドルネーム、ラストネームをすべて大文字に変え、オブジェクトはその状態を記憶する
 
-  attr_accessor :first_name, :middle_name, :last_name
+  attr_writer :first_name
 
-  def initialize(first_name, middle_name=nil, last_name)
+  def initialize(first_name, middle_name= '', last_name)
     @first_name = first_name
     @middle_name = middle_name
     @last_name = last_name
   end
 
   def full_name
-    if middle_name == nil
-      "#{first_name} #{last_name}"
-    else
-      "#{first_name} #{middle_name} #{last_name}"
-    end
+    [first_name, middle_name, last_name].reject(&:empty?).join(' ')
   end
 
   def upcase_full_name
@@ -27,10 +23,17 @@ class TryOut
   end
 
   def upcase_full_name!
-    first_name.upcase!
-    middle_name.upcase! unless middle_name.nil?
-    last_name.upcase!
+    upcase_names!
 
     full_name
+  end
+
+  private
+  attr_reader :first_name, :middle_name, :last_name
+
+  def upcase_names!
+    @first_name.upcase!
+    @middle_name.upcase!
+    @last_name.upcase!
   end
 end
