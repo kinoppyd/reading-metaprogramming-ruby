@@ -11,7 +11,8 @@
 2. 問題を解くためのブランチを切って、今後メイン作業をそのブランチで行う
     1. masterを使わない理由は、fork元のmasterに修正のプルリクを送りたいときに、解いた問題のコミットが紛れると邪魔だからです
     2. 定期的に作業用ブランチにmasterをmergeしてください
-3. バッジのURIを次のように変更します `![](https://github.com/actions/<YOUR_NAME>/reading-metaprogramming-ruby/workflows/Ruby/badge.svg?branch=<YOUR_BRANCH_NAME>)`
+    3. リポジトリのデフォルトブランチを、作成したものに変更してください。masterは必ず失敗するので、バッジの色が常にグレーになってしまいます。
+3. バッジのURIを次のように変更します `![](https://github.com/<YOUR_NAME>/reading-metaprogramming-ruby/workflows/Ruby/badge.svg?branch=<YOUR_BRANCH_NAME>)`
 4. ここまでの変更をpushします
 
 # このリポジトリの目的
@@ -33,4 +34,5 @@ forkした方々のなかから、ここに常に自分のバッジを表示し�
 
 | Name | Badge |
 | ---- | ----- |
-| | |
+| [meganemura](https://github.com/meganemura) | ![](https://github.com/meganemura/reading-metaprogramming-ruby/workflows/Ruby/badge.svg?branch=solve) |
+| [mserizawa](https://github.com/mserizawa) | ![](https://github.com/mserizawa/reading-metaprogramming-ruby/workflows/Ruby/badge.svg?branch=answer) |
