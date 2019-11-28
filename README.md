@@ -37,3 +37,4 @@ forkした方々のなかから、ここに常に自分のバッジを表示し�
 | [meganemura](https://github.com/meganemura) | ![](https://github.com/meganemura/reading-metaprogramming-ruby/workflows/Ruby/badge.svg?branch=solve) |
 | [mserizawa](https://github.com/mserizawa) | ![](https://github.com/mserizawa/reading-metaprogramming-ruby/workflows/Ruby/badge.svg?branch=answer) |
 | [wakasa51](https://github.com/wakasa51) | ![](https://github.com/wakasa51/reading-metaprogramming-ruby/workflows/Ruby/badge.svg?branch=solve) |
+| [morizumi](https://github.com/t-mori23) | ![](https://github.com/t-mori23/reading-metaprogramming-ruby/workflows/Ruby/badge.svg?branch=kotae) |
