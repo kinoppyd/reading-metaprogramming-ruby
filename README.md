@@ -13,7 +13,9 @@
     2. 定期的に作業用ブランチにmasterをmergeしてください
     3. リポジトリのデフォルトブランチを、作成したものに変更してください。masterは必ず失敗するので、バッジの色が常にグレーになってしまいます。
 3. バッジのURIを次のように変更します `![](https://github.com/<YOUR_NAME>/reading-metaprogramming-ruby/workflows/Ruby/badge.svg?branch=<YOUR_BRANCH_NAME>)`
-4. ここまでの変更をpushします
+4. forkしたリポジトリのGitHub Actionsを有効化します
+    1. 緑色のボタンを押すだけで大丈夫なはず
+5. ここまでの変更をpushします
 
 # このリポジトリの目的
 
