@@ -36,3 +36,4 @@ forkした方々のなかから、ここに常に自分のバッジを表示し�
 | ---- | ----- |
 | [meganemura](https://github.com/meganemura) | ![](https://github.com/meganemura/reading-metaprogramming-ruby/workflows/Ruby/badge.svg?branch=solve) |
 | [mserizawa](https://github.com/mserizawa) | ![](https://github.com/mserizawa/reading-metaprogramming-ruby/workflows/Ruby/badge.svg?branch=answer) |
+| [ykarakita](https://github.com/ykarakita) | ![](https://github.com/ykarakita/reading-metaprogramming-ruby/workflows/Ruby/badge.svg?branch=answer) |
