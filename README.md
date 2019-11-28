@@ -35,3 +35,4 @@ forkした方々のなかから、ここに常に自分のバッジを表示し�
 | Name | Badge |
 | ---- | ----- |
 | [meganemura](https://github.com/meganemura) | ![](https://github.com/meganemura/reading-metaprogramming-ruby/workflows/Ruby/badge.svg?branch=solve) |
+| [moonstruckdrops](https://github.com/moonstruckdrops) | ![](https://github.com/moonstruckdrops/reading-metaprogramming-ruby/workflows/Ruby/badge.svg?branch=solve) |
