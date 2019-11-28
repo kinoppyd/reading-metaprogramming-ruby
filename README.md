@@ -42,3 +42,4 @@ forkした方々のなかから、ここに常に自分のバッジを表示し�
 | [ykarakita](https://github.com/ykarakita) | ![](https://github.com/ykarakita/reading-metaprogramming-ruby/workflows/Ruby/badge.svg?branch=solve) |
 | [ringo](https://github.com/aomoriringo) | ![](https://github.com/aomoriringo/reading-metaprogramming-ruby/workflows/Ruby/badge.svg?branch=solve) |
 | [kabetch](https://github.com/MasafumiKabe) | ![](https://github.com/MasafumiKabe/reading-metaprogramming-ruby/workflows/Ruby/badge.svg?branch=solve) |
+| [kouryou](https://github.com/kouryou) | ![](https://github.com/kouryou/reading-metaprogramming-ruby/workflows/Ruby/badge.svg?branch=solve) |
