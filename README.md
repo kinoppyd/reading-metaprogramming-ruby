@@ -38,3 +38,4 @@ forkした方々のなかから、ここに常に自分のバッジを表示し�
 | [mserizawa](https://github.com/mserizawa) | ![](https://github.com/mserizawa/reading-metaprogramming-ruby/workflows/Ruby/badge.svg?branch=answer) |
 | [wakasa51](https://github.com/wakasa51) | ![](https://github.com/wakasa51/reading-metaprogramming-ruby/workflows/Ruby/badge.svg?branch=solve) |
 | [morizumi](https://github.com/t-mori23) | ![](https://github.com/t-mori23/reading-metaprogramming-ruby/workflows/Ruby/badge.svg?branch=kotae) |
+| [moonstruckdrops](https://github.com/moonstruckdrops) | ![](https://github.com/moonstruckdrops/reading-metaprogramming-ruby/workflows/Ruby/badge.svg?branch=solve) |
