@@ -7,7 +7,7 @@ class TestTryOut < MiniTest::Test
     assert_equal "John Wick", target.full_name
   end
 
-  def test_fist_middle_last_name
+  def test_first_middle_last_name
     target = TryOut.new("Keanu", "Charies",  "Reeves")
     assert_equal "Keanu Charies Reeves", target.full_name
   end
@@ -38,6 +38,14 @@ class TestTryOut < MiniTest::Test
     target = TryOut.new("Murphy", "McManus")
     target.upcase_full_name!
     assert_equal "MURPHY MCMANUS", target.full_name
+  end
+
+  def test_too_few_arguments
+    assert_raises (ArgumentError) {TryOut.new("John")}
+  end
+
+  def test_too_many_arguments
+    assert_raises (ArgumentError) {TryOut.new("John", "Milton", "Cage", "Jr")}
   end
 end
 
