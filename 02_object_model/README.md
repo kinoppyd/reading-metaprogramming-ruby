@@ -94,3 +94,7 @@ irb(main):008:0> A::B::D
 - ClassクラスのスーパークラスはModule
 - ModuleのスーパークラスはObject
 - ObjectはClassクラスのインスタンス
+
+## Overview of p29-p45
+
+TBD
