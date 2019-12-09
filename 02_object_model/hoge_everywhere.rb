@@ -6,9 +6,3 @@
 # - Class
 # - Hash
 # - TrueClass
-
-class Object
-  def hoge
-    "hoge"
-  end
-end
