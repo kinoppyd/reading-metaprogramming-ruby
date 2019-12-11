@@ -60,10 +60,13 @@ end
 
 # Q4.
 # 次の動作をする C4 class のメソッド increment を実装する
-# - c4 = C4.new; c4.increment は初め "1" (文字列) を返す
-# - 以降 c4.increment は呼ばれるごとに "2", "3", "4", ...
-#   とインクリメントされた文字列を返す
-# - 定義済みのメソッド (value, value=) は private のままとすること
+# - increment メソッドを呼ぶと value が +1 される
+# - また、increment メソッドは value を文字列にしたものを返す
+#   c4 = C4.new
+#   c4.increment # => "1"
+#   c4.increment # => "2"
+#   c4.increment # => "3"
+# - 定義済みのメソッド (value, value=) は private のままとなっている
 class C4
   private
 
