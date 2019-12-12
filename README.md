@@ -47,3 +47,4 @@ forkした方々のなかから、ここに常に自分のバッジを表示し�
 | [kouryou](https://github.com/kouryou) | [![](https://github.com/kouryou/reading-metaprogramming-ruby/workflows/Ruby/badge.svg?branch=solve)](https://github.com/kouryou/reading-metaprogramming-ruby) |
 | [shunhikita](https://github.com/shunhikita) | [![](https://github.com/shunhikita/reading-metaprogramming-ruby/workflows/Ruby/badge.svg?branch=solve)](https://github.com/shunhikita/reading-metaprogramming-ruby) |
 | [yoshinarl](https://github.com/shunhikita) | [![](https://github.com/yoshinarl/reading-metaprogramming-ruby/workflows/Ruby/badge.svg?branch=yoshinarl-reading)](https://github.com/yoshinarl/reading-metaprogramming-ruby) |
+| [aAnzai2017](https://github.com/aAnzai2017) | [![](https://github.com/aAnzai2017/reading-metaprogramming-ruby/workflows/Ruby/badge.svg?branch=yatteiki)](https://github.com/aAnzai2017/reading-metaprogramming-ruby) |
