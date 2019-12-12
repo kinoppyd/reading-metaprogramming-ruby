@@ -49,9 +49,16 @@ class TestHierarchy < MiniTest::Test
 
       def value
         @called_getter = true
-        @value
+        if defined?(@value)
+          @value
+        else
+          nil
+        end
       end
     end
+    c4.instance_variable_set(:"@called_setter", nil)
+    c4.instance_variable_set(:"@called_getter", nil)
+
     assert_equal "1", c4.increment
     assert c4.instance_variable_get(:"@called_setter")
     assert c4.instance_variable_get(:"@called_getter")
