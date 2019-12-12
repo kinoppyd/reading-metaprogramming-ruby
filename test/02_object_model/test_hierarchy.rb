@@ -40,6 +40,8 @@ class TestHierarchy < MiniTest::Test
   def test_c4_value_called
     c4 = C4.new
     c4.singleton_class.class_eval do
+      private
+
       def value=(x)
         @called_setter = true
         @value = x
