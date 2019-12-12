@@ -32,6 +32,13 @@ class TestHierarchy < MiniTest::Test
 
   def test_c4_increment
     c4 = C4.new
+    assert_equal "1", c4.increment
+    assert_equal "2", c4.increment
+    assert_equal "3", c4.increment
+  end
+
+  def test_c4_value_called
+    c4 = C4.new
     c4.singleton_class.class_eval do
       def value=(x)
         @called_setter = true
@@ -44,8 +51,6 @@ class TestHierarchy < MiniTest::Test
       end
     end
     assert_equal "1", c4.increment
-    assert_equal "2", c4.increment
-    assert_equal "3", c4.increment
     assert c4.instance_variable_get(:"@called_setter")
     assert c4.instance_variable_get(:"@called_getter")
   end
