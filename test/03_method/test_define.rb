@@ -40,6 +40,10 @@ class TestDefine < MiniTest::Test
     assert_equal "#{value_two}#{value_two}#{value_two}", instance.send("hoge_#{value_two}".to_sym, 3)
   end
 
+  def test_answer_a3_define
+    assert_equal true, A3.methods.include?(:my_attr_accessor)
+  end
+
   def test_answer_a3_string
     instance = A3.new
     instance.hoge = "1"
