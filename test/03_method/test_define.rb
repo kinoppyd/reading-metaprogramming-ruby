@@ -8,8 +8,7 @@ class TestDefine < MiniTest::Test
   end
 
   def test_answer_a1_define
-    assert_equal false, A1.methods(false).include?("//")
-    assert_equal false, A1.new.methods.include?("//")
+    assert_equal true, A1.new.methods.include?("//".to_sym)
   end
 
   def test_answer_a2
