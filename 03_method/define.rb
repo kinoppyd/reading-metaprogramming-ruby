@@ -4,13 +4,18 @@
 
 # Q2.
 # 次の動作をする A2 class を実装する
-# - initializeに渡した配列に含まれる値のメソッドが存在すること
-# - 定義するメソッドは、"hoge_" をprefixとして付与し、引数として数字を受け取ることができる
-# - 引数がnilの場合は、"SmartHR Dev Team"と返すインスタンスメソッドdev_teamメソッドを呼ぶこと
-# - 返り値はメソッド名を引数の数だけ配列の内容を倍にしたものとすること
+# - 1. "SmartHR Dev Team"と返すdev_teamメソッドが存在すること
+# - 2. initializeに渡した配列に含まれる値に対して、"hoge_" をprefixを付与したメソッドが存在すること
+# - 2で定義するメソッドは下記とする
+#   - 受け取った引数の回数分、メソッド名を繰り返した文字列を返すこと
+#   - 引数がnilの場合は、dev_teamメソッドを呼ぶこと
 
 # Q3.
-# 次の動作をする A3 class を実装する
-# - my_attr_accessorを定義すること
+# 次の動作をする OriginalAccessor モジュール を実装する
+# - OriginalAccessorモジュールはincludeされたときのみ、my_attr_accessorメソッドを定義すること
 # - my_attr_accessorはgetter/setterに加えて、boolean値を代入した際のみ真偽値判定を行うsetterと同名の?メソッドができること
-# - アクセッサはhogeとすること
+# A3 classは変更しないこと
+class A3
+  include OriginalAccessor
+  my_attr_accessor :hoge
+end
