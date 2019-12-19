@@ -13,9 +13,4 @@
 # Q3.
 # 次の動作をする OriginalAccessor モジュール を実装する
 # - OriginalAccessorモジュールはincludeされたときのみ、my_attr_accessorメソッドを定義すること
-# - my_attr_accessorはgetter/setterに加えて、boolean値を代入した際のみ真偽値判定を行うsetterと同名の?メソッドができること
-# A3 classは変更しないこと
-class A3
-  include OriginalAccessor
-  my_attr_accessor :hoge
-end
+# - my_attr_accessorはgetter/setterに加えて、boolean値を代入した際のみ真偽値判定を行うaccessorと同名の?メソッドができること

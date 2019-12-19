@@ -3,6 +3,12 @@ require 'define'
 require 'securerandom'
 
 class TestDefine < MiniTest::Test
+
+  class A3
+    include OriginalAccessor
+    my_attr_accessor :hoge
+  end
+
   def test_answer_a1
     assert_equal "//", A1.new.send("//".to_sym)
   end
