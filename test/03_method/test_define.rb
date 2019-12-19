@@ -4,9 +4,12 @@ require 'securerandom'
 
 class TestDefine < MiniTest::Test
 
-  class A3
-    include OriginalAccessor
-    my_attr_accessor :hoge
+  begin
+    class A3
+      include OriginalAccessor
+      my_attr_accessor :hoge
+    end
+  rescue
   end
 
   def test_answer_a1
