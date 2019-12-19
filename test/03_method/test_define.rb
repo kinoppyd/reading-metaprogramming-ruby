@@ -50,7 +50,7 @@ class TestDefine < MiniTest::Test
     instance = A2.new([1])
 
     @called_dev_team = false
-    trace = TracePoint.new(:call, :return) do |tp|
+    trace = TracePoint.new(:call) do |tp|
       @called_dev_team = tp.event == :call && tp.method_id == :dev_team unless @called_dev_team
     end
     trace.enable
