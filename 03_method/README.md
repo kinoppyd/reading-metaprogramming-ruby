@@ -238,7 +238,163 @@ end
 
 ## Overview of 3.3 - 3章終わりまで
 
-TBD
+### method_missing
+
+Ruby では、存在しないメソッドを呼び出すことができる。メソッド探索で継承チェーンを辿ってもメソッドが見つからなかった時、 Ruby は元のレシーバの `method_missing` メソッドを呼び出す。 `Object#method_missing` の返答は `NoMethodError` となる。
+
+```ruby
+class Lawyer; end
+
+nick = Lawyer.new
+nick.send :method_missing, :my_method
+# => NoMethodError: undefined method `my_method' for #<Lawyer:0x007f801b0f4978>
+```
+
+#### ゴーストメソッド
+
+method_missing をオーバーライドすると、実際には存在しないメソッドを呼び出すことができる。これを、 **ゴーストメソッド** と呼ぶ。
+
+```ruby
+class Lawyer
+  def method_missing(method, *args)
+    puts "呼び出した：#{method}(#{args.join(', ')})"
+    puts "(ブロックも渡した)" if block_given?
+  end
+end
+
+bob = Lawyer.new
+bob.talk_simple('a', 'b') do
+  # ブロック
+end
+# => 呼び出した：talk_simple(a, b)
+#    (ブロックも渡した)
+```
+
+ゴーストメソッドを捕捉して他のオブジェクトに転送するオブジェクトを、 **動的プロキシ** と呼ぶ。
+
+#### Computer クラスのリファクタリング
+
+##### 元の Computer クラス
+
+```ruby
+class Computer
+  def initialize(computer_id, data_source)
+    @id = computer_id
+    @data_source = data_source
+  end
+
+  def mouse
+    info = @data_source.get_mouse_info(@id)
+    price = @data_source.get_mouse_price(@id)
+    result = "Mouse: #{info} ($#{price})"
+    return "* #{result}" if price >= 100
+    result
+  end
+
+  def cpu
+    info = @data_source.get_cpu_info(@id)
+    price = @data_source.get_cpu_price(@id)
+    result = "Cpu: #{info} ($#{price})"
+    return "* #{result}" if price >= 100
+    result
+  end
+	
+  def keyboard
+    info = @data_source.get_keyboard_info(@id)
+    price = @data_source.get_keyboard_price(@id)
+    result = "Keyboard: #{info} ($#{price})"
+    return "* #{result}" if price >= 100
+    result
+  end
+
+  #...
+end
+```
+
+##### ゴーストメソッドを用いた Computer クラス
+
+method_missing をオーバーライドして、 Computer クラスから全ての重複を排除する。
+
+```ruby
+class Computer
+  def initialize(computer_id, data_source)
+    @id = computer_id
+    @data_source = data_source
+  end
+
+  def method_missing(name)
+    super if !@data_source.respond_to?("get_#{name}_info")
+    info = @data_source.send("get_#{name}_info", @id)
+    price = @data_source.send("get_#{name}_price", @id)
+    result = "#{name.capitalize}: #{info} (#{price})"
+    return "* #{result}" if price >= 100
+    result
+  end
+end
+```
+
+`Computer#cpu` などのメソッドを呼び出すと、その呼び出しはすべて method_missing に集められる。そこで、データソースが `get_cpu_info` メソッドを持っているかどうかをチェックする。持っていなければ `BasicObject#method_missing` が呼び出され、そこで NoMethodError が発生する。データソースがコンポーネントを持っていれば、元の呼び出しは `DS#get_cpu_info` と `DS#get_cpu_price` の2つの呼び出しに変換される。これらの呼び出し結果は、最終的な結果の構築に使われる。
+
+```ruby
+my_computer = Computer.new(42, DS.new)
+my_computer.cpu
+# => *Cpu: 2.9 Ghz quad-core ($120)
+```
+
+しかし、ゴーストメソッドは `respond_to?` で認識できない。
+**method_missing をオーバーライドするときは、忘れずに respond_to_missing? もオーバーライドする。**
+
+```ruby
+class Computer
+  # ...
+
+  def respond_to_missing?(method, include_private = false)
+    @data_source.respond_to?("get_#{method}_info") || super
+  end
+end
+```
+
+#### ブランクスレート
+
+リファクタリングした Computer クラスにおいて、 `Computer#display` だけが nil を戻す。
+それは、 Object が `display` という名前のメソッドを定義しているからであり、 Computer は Object を継承しているので、 `Computer#display` を呼び出すとそのメソッドが見つかり、 method_missing にたどり着かないからである。
+そこで、必要最低限のメソッドしか持たない BasicObject を継承することでこれを回避する。
+このような最小限のメソッドしかない状態のクラスを **ブランクスレート** と呼ぶ。
+
+```ruby
+class Computer < BasicObject
+  # ...
+```
+
+また、 BasicObject は `respond_to?` メソッドを持っていないため、 `respond_to_missing?` メソッドのオーバーライドが不要になる。
+
+#### Computer クラスのリファクタリング（最終形）
+
+```ruby
+class Computer < BasicObject
+  def initialize(computer_id, data_source)
+    @id = computer_id
+    @data_source = data_source
+  end
+
+  def method_missing(name, *args)
+    super if !@data_source.respond_to?("get_#{name}_info")
+    info = @data_source.send("get_#{name}_info", @id)
+    price = @data_source.send("get_#{name}_price", @id)
+    result = "#{name.capitalize}: #{info} (#{price})"
+    return "* #{result}" if price >= 100
+    result
+  end
+end
+```
+
+### まとめ
+
+* method_missing をオーバーライドすると、実際には存在しないメソッドを呼び出すことができる。これを、 **ゴーストメソッド** と呼ぶ。
+* ゴーストメソッドを捕捉して他のオブジェクトに転送するオブジェクトを、 **動的プロキシ** と呼ぶ。
+* method_missing をオーバーライドするときは、忘れずに respond_to_missing? もオーバーライドする。
+* 最小限のメソッドしかない状態のクラスを **ブランクスレート** と呼ぶ。
+* **可能であれば動的メソッドを使い、仕方がなければゴーストメソッドを使う**
 
 ## 正誤表
 
