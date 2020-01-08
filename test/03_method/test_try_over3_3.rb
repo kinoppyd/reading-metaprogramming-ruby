@@ -15,6 +15,10 @@ class TestTryOver03Q1 < Minitest::Test
     assert_raises(NoMethodError) { TryOver3::A1.new.testhoge }
   end
 
+  def test_q1_methods_not_included_test
+    assert_equal false, TryOver3::A1.instance_methods(false).any? { |method_name| method_name.to_s.start_with?("test_") }
+  end
+
   def test_q2_proxy_hoge
     source = TryOver3::A2.new("hoge", "hogehoge")
     assert_equal "hogehoge", TryOver3::A2Proxy.new(source).hoge
