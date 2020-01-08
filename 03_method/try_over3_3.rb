@@ -1,31 +1,31 @@
+TryOver3 = Module.new
 # Q1
-# 以下のクラス A1 を修正して、`test_` から始まるインスタンスメソッドが実行された場合は `run_test` メソッドを実行されるようにしてください。
-class A1
-  def run_test ; end
-end
+# 以下要件を満たすクラス TryOver3::A1 を作成してください
+# - run_test というインスタンスメソッドを持ち、それはnilを返す
+# - `test_` から始まるインスタンスメソッドが実行された場合、このクラスは `run_test` メソッドを実行する
+# - `test_` メソッドがこのクラスに実装されていなくても `test_` というメッセージに応答することができる
+
 
 # Q2
-# 以下のクラス A2 はinitializeにnameとvalueをとり、nameの名前でvalueを返すreaderメソッドが動的に生成されます。
-# A2Proxy にのみコードを追加して A2 に動的に生成されるメソッドと同様の名前、戻り値のメソッドを A2Proxy が実行できるようにしてください。
-# またその際 `respond_to? name` をしても true が返されるようにしてください。
-class A2
+# TryOver3::A2 という initialize で受け取った名前のインスタンス変数と、そのreaderメソッドを持つクラスがあります
+#
+# 以下要件を満たす TryOver::A2Proxy クラスを作成してください
+# - TryOver3::A2Proxy は initialize に TryOver3::A2 のインスタンスを受け取り、それを @source に代入する
+# - TryOver3::A2Proxy のインスタンスメソッドが実行されたとき、それが存在しないメソッドであった場合、代わりに @source の同じ名前を持つメソッドを実行する
+# - TryOver3::A2Proxy の `#respond_to?` が実行されたとき、それが存在しないメソッドであった場合 @source の respond_to? を実行する
+class TryOver3::A2
   def initialize(name, value)
     instance_variable_set("@#{name}", value)
     self.class.attr_reader name.to_sym
   end
 end
 
-class A2Proxy
-  def initialize(source)
-    @source = source
-  end
-end
 
 # Q3
 # 前回 OriginalAccessor の my_attr_accessor で定義した getter/setter に boolean の値が入っている場合には #{name}? が定義されるようなモジュールを実装しました。
 # 今回は、そのモジュールに boolean 以外が入っている場合には hoge? メソッドが存在しないように変更を加えてください。
 # （以下は god の模範解答を一部変更したものです。以下のコードに変更を加えてください）
-module OriginalAccessor2
+module TryOver03::OriginalAccessor2
   def self.included(mod)
     mod.define_singleton_method :my_attr_accessor do |attr_sym|
       define_method attr_sym do
@@ -44,19 +44,18 @@ module OriginalAccessor2
   end
 end
 
+
 # Q4
-# 以下の A4 クラスには新しくクラスを定義せずに以下のように動作するクラスを完成させてください
-# A4.runners = [:Hoge]
-# A4::Hoge.run
+# 以下のように実行することができる TryOver3::A4 クラスを作成してください
+# TryOver3::A4.runners = [:Hoge]
+# TryOver3::A4::Hoge.run
 # # => "run Hoge"
-class A4
-  self.class.attr_accessor :runners
-end
+
 
 # Q5. チャレンジ問題！ 挑戦する方はテストの skip を外して挑戦してみてください。
 #
-# TaskHelper という include すると task というクラスマクロが与えらる以下のようなモジュールがあります。
-module TaskHelper
+# TryOver3::TaskHelper という include すると task というクラスマクロが与えらる以下のようなモジュールがあります。
+module TryOver3::TaskHelper
   def self.included(klass)
     klass.define_singleton_method :task do |name, &task_block|
       new_klass = Class.new do
@@ -73,8 +72,8 @@ module TaskHelper
   end
 end
 
-# TaskHelper は include することで以下のような使い方ができます
-class A5Task
+# TryOver3::TaskHelper は include することで以下のような使い方ができます
+class TryOver3::A5Task
   include TaskHelper
 
   task :foo do
@@ -86,21 +85,21 @@ end
 # finish 2020-01-07 18:03:10 +0900
 # => "foo"
 
-# 今回 TaskHelper では A5Task::Foo のように Foo クラスを作らず A5Task.foo のようにクラスメソッドとして task で定義された名前のクラスメソッドでブロックを実行するように変更したいです。
-# でも、TaskHelper はすでに A5Task::Foo.run のように生成されたクラスを使った実行している人がたくさんいます。
+# 今回 TryOver3::TaskHelper では TryOver3::A5Task::Foo のように Foo クラスを作らず TryOver3::A5Task.foo のようにクラスメソッドとして task で定義された名前のクラスメソッドでブロックを実行するように変更したいです。
+# でも、TryOver3::TaskHelper はすでに TryOver3::A5Task::Foo.run のように生成されたクラスを使った実行している人がたくさんいます。
 # 今回変更を加えても、その人たちにはこれまで通り生成されたクラスのrunメソッドでタスクを実行できるようにしておいて、warning だけだしておくようにしたいです。
-# TaskHelper を修正してそれを実現してください。 なお、その際、クラスは実行されない限り生成されないものとします。
+# TryOver3::TaskHelper を修正してそれを実現してください。 なお、その際、クラスは実行されない限り生成されないものとします。
 #
 # 変更後想定する使い方
 # メソッドを使ったケース
-# irb(main):001:0> A5Task.foo
+# irb(main):001:0> TryOver3::A5Task.foo
 # start 2020-01-07 18:03:10 +0900
 # finish 2020-01-07 18:03:10 +0900
 # => "foo"
 #
 # クラスのrunメソッドを使ったケース
-# irb(main):001:0> A5Task::Foo.run
-# Warning: A5Task::Foo.run is duplicated
+# irb(main):001:0> TryOver3::A5Task::Foo.run
+# Warning: TryOver3::A5Task::Foo.run is duplicated
 # start 2020-01-07 18:03:10 +0900
 # finish 2020-01-07 18:03:10 +0900
 # => "foo"
