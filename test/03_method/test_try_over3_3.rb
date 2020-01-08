@@ -31,8 +31,8 @@ class TestTryOver03Q1 < Minitest::Test
   end
 
   def test_q2_proxy_respond_to_hoge
-    source = TryOver3::A2.new("hoge", "hogehoge")
-    assert_respond_to TryOver3::A2Proxy.new(source), :hoge
+    source = TryOver3::A2.new("foo", "hogehoge")
+    assert_respond_to TryOver3::A2Proxy.new(source), :foo
   end
 
   def test_q2_proxy_methods_not_included_hoge
