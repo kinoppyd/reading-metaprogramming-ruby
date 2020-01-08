@@ -7,10 +7,9 @@ TryOver3 = Module.new
 
 
 # Q2
-# 以下要件を満たす TryOver::A2Proxy クラスを作成してください。
+# 以下要件を満たす TryOver3::A2Proxy クラスを作成してください。
 # - TryOver3::A2Proxy は initialize に TryOver3::A2 のインスタンスを受け取り、それを @source に代入する
-# - TryOver3::A2Proxy のインスタンスメソッドが実行されたとき、それが存在しないメソッドであった場合、代わりに @source の同じ名前を持つメソッドを実行する
-# - TryOver3::A2Proxy の `#respond_to?` が実行されたとき、それが存在しないメソッドであった場合 @source の respond_to? を実行する
+# - TryOver3::A2Proxy は、@sourceに定義されているメソッドが自分自身に定義されているように振る舞う
 class TryOver3::A2
   def initialize(name, value)
     instance_variable_set("@#{name}", value)
