@@ -1,15 +1,13 @@
 TryOver3 = Module.new
 # Q1
-# 以下要件を満たすクラス TryOver3::A1 を作成してください
+# 以下要件を満たすクラス TryOver3::A1 を作成してください。
 # - run_test というインスタンスメソッドを持ち、それはnilを返す
 # - `test_` から始まるインスタンスメソッドが実行された場合、このクラスは `run_test` メソッドを実行する
-# - `test_` メソッドがこのクラスに実装されていなくても `test_` というメッセージに応答することができる
+# - `test_` メソッドがこのクラスに実装されていなくても `test_` から始まるメッセージに応答することができる
 
 
 # Q2
-# TryOver3::A2 という initialize で受け取った名前のインスタンス変数と、そのreaderメソッドを持つクラスがあります
-#
-# 以下要件を満たす TryOver::A2Proxy クラスを作成してください
+# 以下要件を満たす TryOver::A2Proxy クラスを作成してください。
 # - TryOver3::A2Proxy は initialize に TryOver3::A2 のインスタンスを受け取り、それを @source に代入する
 # - TryOver3::A2Proxy のインスタンスメソッドが実行されたとき、それが存在しないメソッドであった場合、代わりに @source の同じ名前を持つメソッドを実行する
 # - TryOver3::A2Proxy の `#respond_to?` が実行されたとき、それが存在しないメソッドであった場合 @source の respond_to? を実行する
@@ -23,7 +21,7 @@ end
 
 # Q3
 # 前回 OriginalAccessor の my_attr_accessor で定義した getter/setter に boolean の値が入っている場合には #{name}? が定義されるようなモジュールを実装しました。
-# 今回は、そのモジュールに boolean 以外が入っている場合には hoge? メソッドが存在しないように変更を加えてください。
+# 今回は、そのモジュールに boolean 以外が入っている場合には hoge? メソッドが存在しないようにする変更を加えてください。
 # （以下は god の模範解答を一部変更したものです。以下のコードに変更を加えてください）
 module TryOver03::OriginalAccessor2
   def self.included(mod)
@@ -46,7 +44,7 @@ end
 
 
 # Q4
-# 以下のように実行することができる TryOver3::A4 クラスを作成してください
+# 以下のように実行できる TryOver3::A4 クラスを作成してください。
 # TryOver3::A4.runners = [:Hoge]
 # TryOver3::A4::Hoge.run
 # # => "run Hoge"
@@ -86,7 +84,7 @@ end
 # => "foo"
 
 # 今回 TryOver3::TaskHelper では TryOver3::A5Task::Foo のように Foo クラスを作らず TryOver3::A5Task.foo のようにクラスメソッドとして task で定義された名前のクラスメソッドでブロックを実行するように変更したいです。
-# でも、TryOver3::TaskHelper はすでに TryOver3::A5Task::Foo.run のように生成されたクラスを使った実行している人がたくさんいます。
+# 現在 TryOver3::TaskHelper のユーザには TryOver3::A5Task::Foo.run のように生成されたクラスを使って実行しているユーザが存在します。
 # 今回変更を加えても、その人たちにはこれまで通り生成されたクラスのrunメソッドでタスクを実行できるようにしておいて、warning だけだしておくようにしたいです。
 # TryOver3::TaskHelper を修正してそれを実現してください。 なお、その際、クラスは実行されない限り生成されないものとします。
 #
