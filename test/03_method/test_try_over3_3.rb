@@ -19,9 +19,9 @@ class TestTryOver03Q1 < Minitest::Test
     assert_equal false, TryOver3::A1.instance_methods(false).any? { |method_name| method_name.to_s.start_with?("test_") }
   end
 
-  def test_q2_proxy_hoge
-    source = TryOver3::A2.new("hoge", "hogehoge")
-    assert_equal "hogehoge", TryOver3::A2Proxy.new(source).hoge
+  def test_q2_proxy_foo
+    source = TryOver3::A2.new("foo", "foofoo")
+    assert_equal "foofoo", TryOver3::A2Proxy.new(source).foo
   end
 
   def test_q2_proxy_hoge_writter
@@ -33,18 +33,18 @@ class TestTryOver03Q1 < Minitest::Test
 
   def test_q2_proxy_rand
     name = alpha_rand
-    source = TryOver3::A2.new(name, "hogehoge")
-    assert_equal "hogehoge", TryOver3::A2Proxy.new(source).public_send(name)
+    source = TryOver3::A2.new(name, "foo")
+    assert_equal "foo", TryOver3::A2Proxy.new(source).public_send(name)
   end
 
-  def test_q2_proxy_respond_to_hoge
-    source = TryOver3::A2.new("foo", "hogehoge")
+  def test_q2_proxy_respond_to_foo
+    source = TryOver3::A2.new("foo", "foofoo")
     assert_respond_to TryOver3::A2Proxy.new(source), :foo
   end
 
-  def test_q2_proxy_methods_not_included_hoge
-    source = TryOver3::A2.new("hoge", "hogehoge")
-    refute_includes TryOver3::A2Proxy.new(source).methods, :hoge
+  def test_q2_proxy_methods_not_included_foo
+    source = TryOver3::A2.new("foo", "foofoo")
+    refute_includes TryOver3::A2Proxy.new(source).methods, :foo
   end
 
   def test_q3_original_accessor_boolean_method
