@@ -240,7 +240,7 @@ end
 
 ### method_missing
 
-Ruby では、存在しないメソッドを呼び出すことができる。メソッド探索で継承チェーンを辿ってもメソッドが見つからなかった時、 Ruby は元のレシーバの `method_missing` メソッドを呼び出す。 `Object#method_missing` の返答は `NoMethodError` となる。
+Ruby では、存在しないメソッドを呼び出すことができる。メソッド探索で継承チェーンを辿ってもメソッドが見つからなかった時、 Ruby は元のレシーバの `method_missing` メソッドを呼び出す。 `BasicObject#method_missing` の返答は `NoMethodError` となる。
 
 ```ruby
 class Lawyer; end
