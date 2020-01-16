@@ -38,18 +38,22 @@ class TestEvilMailbox < MiniTest::Test
     mb, _ = evil_mailbox do
       expect :send_mail, true, ["ppyd", "hello"]
     end
+    ret = nil
     mb.send_mail("ppyd", "hello") do |res|
-      assert_equal true, res
+      ret = res
     end
+    assert_equal true, ret
   end
 
   def test_send_mail_exec_block_with_result_false
     mb, _ = evil_mailbox do
       expect :send_mail, false, ["ppyd", "hello"]
     end
+    ret = nil
     mb.send_mail("ppyd", "hello") do |res|
-      assert_equal false, res
+      ret = res
     end
+    assert_equal false, ret
   end
 
   def test_mail_object_auth
