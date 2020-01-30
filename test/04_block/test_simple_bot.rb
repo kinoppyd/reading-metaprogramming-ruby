@@ -50,36 +50,4 @@ class TestSimpleBot < MiniTest::Test
 
     assert_equal "code is #{code}", klass.new.ask('tell me your code')
   end
-
-  def test_after_filter
-    klass = bot_for_test do
-      respond 'hello' do
-        'hello'
-      end
-
-      after(/hello/) do |res|
-        res + ' men'
-      end
-    end
-
-    assert_equal 'hello men', klass.new.ask('hello')
-  end
-
-  def test_some_after_filter
-    klass = bot_for_test do
-      respond 'hello' do
-        'yo hello'
-      end
-
-      after(/hello/) do |res|
-        res + ' men'
-      end
-
-      after(/yo/) do |res|
-        'yo ' + res
-      end
-    end
-
-    assert_equal 'yo yo hello men', klass.new.ask('hello')
-  end
 end
