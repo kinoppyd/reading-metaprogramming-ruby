@@ -13,8 +13,11 @@ jobs:
       uses: actions/setup-ruby@v1
       with:
         ruby-version: 2.6.x
-    - name: Build and test with Rake
+    - name: Install Dependencies
       run: |
         gem install bundler
         bundle install --jobs 4 --retry 3
-        bundle exec rake
+    - name: Run Test
+      run: |
+        bundle exec ruby -Itest test/00_setup/test_try_out.rb
+        # bundle exec rake
