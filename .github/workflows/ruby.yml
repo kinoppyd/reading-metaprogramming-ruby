@@ -20,4 +20,5 @@ jobs:
     - name: Run Test
       run: |
         bundle exec ruby -Itest test/00_setup/test_try_out.rb
+        bundle exec ruby -Itest test/02_object_model/test_hierarchy.rb
         # bundle exec rake
