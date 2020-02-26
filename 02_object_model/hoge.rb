@@ -11,6 +11,6 @@ class Hoge < String
   end
 
   def hoge?
-    self.to_s == "hoge"
+    self == "hoge"
   end
 end

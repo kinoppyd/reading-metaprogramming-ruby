@@ -80,7 +80,7 @@ end
 # - 定義済みのメソッド (value, value=) は private のままとなっている
 class C4
   def increment
-    self.value = (value || 0) + 1
+    self.value = value.to_i + 1
     value.to_s
   end
   private
