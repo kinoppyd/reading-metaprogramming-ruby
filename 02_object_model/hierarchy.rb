@@ -80,11 +80,8 @@ end
 # - 定義済みのメソッド (value, value=) は private のままとなっている
 class C4
   def increment
-    old_val = send(:value)
-    old_val ||= 0
-    new_val = old_val + 1
-    self.value = new_val
-    new_val.to_s
+    self.value = (value || 0) + 1
+    value.to_s
   end
   private
 

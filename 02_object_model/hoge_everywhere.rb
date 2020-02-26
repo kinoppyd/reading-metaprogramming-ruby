@@ -7,6 +7,13 @@
 # - Hash
 # - TrueClass
 
+class Object
+  def hoge
+    "hoge"
+  end
+end
+
+=begin
 class String
   def hoge
     "hoge"
@@ -37,3 +44,4 @@ class TrueClass
     "hoge"
   end
 end
+=end
