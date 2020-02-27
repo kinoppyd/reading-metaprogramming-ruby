@@ -52,7 +52,7 @@ end
 
 # Q5. チャレンジ問題！ 挑戦する方はテストの skip を外して挑戦してみてください。
 #
-# TryOver3::TaskHelper という include すると task というクラスマクロが与えらる以下のようなモジュールがあります。
+# TryOver3::TaskHelper という include すると task というクラスマクロが与えられる以下のようなモジュールがあります。
 module TryOver3::TaskHelper
   def self.included(klass)
     klass.define_singleton_method :task do |name, &task_block|
