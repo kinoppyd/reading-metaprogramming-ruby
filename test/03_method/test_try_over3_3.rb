@@ -103,6 +103,10 @@ class TestTryOver03Q1 < Minitest::Test
     assert_match "Warning: TryOver3::A5Task::Foo.run is duplicated", err
   end
 
+  def test_q5_error_when_called_not_defined_task_class
+    assert_raises(NameError) { TryOver3::A5Task::Bar.run }
+  end
+
   private
 
   def alpha_rand(size = 8)
