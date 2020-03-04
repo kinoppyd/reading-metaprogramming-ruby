@@ -15,9 +15,9 @@ end
 class A2
   def initialize(ary)
     ary.each do |val|
-      self.class.define_method("hoge_#{val}") do |param|
-        return dev_team if param.nil?
-        __method__.to_s * param
+      define_singleton_method("hoge_#{val}") do |int|
+        return dev_team if int.nil?
+        __method__.to_s * int
       end
     end
   end
@@ -38,16 +38,12 @@ module OriginalAccessor
 
   module ClassMethods
     def my_attr_accessor(attribute)
-      define_method(attribute) do
-        instance_variable_get("@#{attribute}")
-      end
+      attr_reader attribute
 
       define_method("#{attribute}=") do |val|
         instance_variable_set "@#{attribute}", val
         if val.is_a?(TrueClass) || val.is_a?(FalseClass)
-          self.class.define_method("#{attribute}?") { val }
-        else
-          self.class.undef_method("#{attribute}?") if self.class.method_defined?("#{attribute}?")
+          define_singleton_method("#{attribute}?") { val }
         end
       end
     end
