@@ -14,6 +14,16 @@ end
 # - 2で定義するメソッドは下記とする
 #   - 受け取った引数の回数分、メソッド名を繰り返した文字列を返すこと
 #   - 引数がnilの場合は、dev_teamメソッドを呼ぶこと
+class A2
+  def initialize(*args)
+    if args.count.zero?
+      define_singleton_method :dev_team do
+        "SmartHR Dev Team"
+      end
+    else
+    end
+  end
+end
 
 # Q3.
 # 次の動作をする OriginalAccessor モジュール を実装する
