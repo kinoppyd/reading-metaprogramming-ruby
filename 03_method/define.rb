@@ -1,6 +1,11 @@
 # Q1.
 # 次の動作をする A1 class を実装する
 # - "//" を返す "//"メソッドが存在すること
+class A1
+  define_method "//".to_sym do
+    "//"
+  end
+end
 
 # Q2.
 # 次の動作をする A2 class を実装する
