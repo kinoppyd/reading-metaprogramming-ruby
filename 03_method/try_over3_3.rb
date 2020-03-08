@@ -5,6 +5,16 @@ TryOver3 = Module.new
 # - `test_` から始まるインスタンスメソッドが実行された場合、このクラスは `run_test` メソッドを実行する
 # - `test_` メソッドがこのクラスに実装されていなくても `test_` から始まるメッセージに応答することができる
 # - TryOver3::A1 には `test_` から始まるインスタンスメソッドが定義されていない
+class TryOver3::A1
+  def run_test
+    nil
+  end
+
+  def method_missing(method_name, *args)
+    return run_test if method_name.to_s.start_with?("test_")
+    super
+  end
+end
 
 
 # Q2
@@ -18,6 +28,23 @@ class TryOver3::A2
   end
 end
 
+class TryOver3::A2Proxy
+  # extend Forwardable
+
+  def initialize(a2_instance)
+    @source = a2_instance
+    # self.class.def_delegators :@source, *@source.public_methods(false)
+  end
+
+  def method_missing(method, *args)
+    return @source.send(method, *args) if @source.class.method_defined?(method)
+    super
+  end
+
+  def respond_to_missing?(method, include_private = false)
+    @source.respond_to?(method) || super
+  end
+end
 
 # Q3
 # 前回 OriginalAccessor の my_attr_accessor で定義した getter/setter に boolean の値が入っている場合には #{name}? が定義されるようなモジュールを実装しました。
@@ -31,10 +58,10 @@ module TryOver3::OriginalAccessor2
       end
 
       define_method "#{attr_sym}=" do |value|
-        if [true, false].include?(value) && !respond_to?("#{attr_sym}?")
-          self.class.define_method "#{attr_sym}?" do
-            @attr == true
-          end
+        if [true, false].include?(value)
+          self.class.define_method("#{attr_sym}?") { @attr }
+        else
+          self.class.undef_method("#{attr_sym}?") if respond_to?("#{attr_sym}?")
         end
         @attr = value
       end
@@ -48,6 +75,23 @@ end
 # TryOver3::A4.runners = [:Hoge]
 # TryOver3::A4::Hoge.run
 # # => "run Hoge"
+class TryOver3::A4
+  class << self
+    def runners=(runners)
+      @runners = runners
+    end
+
+    def const_missing(const_name)
+      if @runners.include?(const_name)
+        Class.new do
+          define_singleton_method(:run) { "run #{const_name}" }
+        end
+      else
+        super
+      end
+    end
+  end
+end
 
 
 # Q5. チャレンジ問題！ 挑戦する方はテストの skip を外して挑戦してみてください。
@@ -55,17 +99,30 @@ end
 # TryOver3::TaskHelper という include すると task というクラスマクロが与えらる以下のようなモジュールがあります。
 module TryOver3::TaskHelper
   def self.included(klass)
-    klass.define_singleton_method :task do |name, &task_block|
-      new_klass = Class.new do
+    klass.extend ClassMethods
+  end
+
+  module ClassMethods
+    def task(name, &task_block)
+      @task_name = name
+      @task_block = task_block
+
+      define_singleton_method(name) { task_block.call }
+    end
+
+    def const_missing(const_name)
+      task_block = @task_block
+      base_klass_name = name
+      new_klass_name = @task_name.to_s.split("_").map{ |w| w[0] = w[0].upcase; w }.join
+      Class.new do
         define_singleton_method :run do
+          warn "Warning: #{base_klass_name}::#{new_klass_name}.run is duplicated"
           puts "start #{Time.now}"
           block_return = task_block.call
           puts "finish #{Time.now}"
           block_return
         end
       end
-      new_klass_name = name.to_s.split("_").map{ |w| w[0] = w[0].upcase; w }.join
-      const_set(new_klass_name, new_klass)
     end
   end
 end
