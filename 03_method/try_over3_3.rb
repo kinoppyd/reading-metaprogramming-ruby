@@ -37,8 +37,7 @@ class TryOver3::A2Proxy
   end
 
   def method_missing(method, *args)
-    return @source.send(method, *args) if @source.class.method_defined?(method)
-    super
+    @source.send(method, *args)
   end
 
   def respond_to_missing?(method, include_private = false)
@@ -99,28 +98,22 @@ end
 # TryOver3::TaskHelper という include すると task というクラスマクロが与えらる以下のようなモジュールがあります。
 module TryOver3::TaskHelper
   def self.included(klass)
-    klass.extend ClassMethods
-  end
+    klass.define_singleton_method :task do |name, &task_block|
+      define_singleton_method(name) do
+        puts "start #{Time.now}"
+        block_return = task_block.call
+        puts "finish #{Time.now}"
+        block_return
+      end
 
-  module ClassMethods
-    def task(name, &task_block)
-      @task_name = name
-      @task_block = task_block
+      define_singleton_method(:const_missing) do |const_name|
+        new_klass_name = name.to_s.split('_').map{ |w| w[0] = w[0].upcase; w }.join
 
-      define_singleton_method(name) { task_block.call }
-    end
-
-    def const_missing(const_name)
-      task_block = @task_block
-      base_klass_name = name
-      new_klass_name = @task_name.to_s.split("_").map{ |w| w[0] = w[0].upcase; w }.join
-      Class.new do
-        define_singleton_method :run do
-          warn "Warning: #{base_klass_name}::#{new_klass_name}.run is duplicated"
-          puts "start #{Time.now}"
-          block_return = task_block.call
-          puts "finish #{Time.now}"
-          block_return
+        Class.new do
+          define_singleton_method :run do
+            warn "Warning: #{klass}::#{new_klass_name}.run is duplicated"
+            klass.send(name)
+          end
         end
       end
     end
