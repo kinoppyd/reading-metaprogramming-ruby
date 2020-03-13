@@ -100,7 +100,7 @@ class TestTryOver03Q1 < Minitest::Test
     _, err = capture_io do
       TryOver3::A5Task::Foo.run
     end
-    assert_match "Warning: TryOver3::A5Task::Foo.run is duplicated", err
+    assert_match "Warning: TryOver3::A5Task::Foo.run is deprecated", err
   end
 
   private

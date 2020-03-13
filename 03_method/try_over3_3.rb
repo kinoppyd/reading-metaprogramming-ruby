@@ -97,7 +97,7 @@ end
 #
 # クラスのrunメソッドを使ったケース
 # irb(main):001:0> TryOver3::A5Task::Foo.run
-# Warning: TryOver3::A5Task::Foo.run is duplicated
+# Warning: TryOver3::A5Task::Foo.run is deprecated
 # start 2020-01-07 18:03:10 +0900
 # finish 2020-01-07 18:03:10 +0900
 # => "foo"
