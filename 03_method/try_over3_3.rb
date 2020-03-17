@@ -97,7 +97,7 @@ end
 
 # Q5. チャレンジ問題！ 挑戦する方はテストの skip を外して挑戦してみてください。
 #
-# TryOver3::TaskHelper という include すると task というクラスマクロが与えらる以下のようなモジュールがあります。
+# TryOver3::TaskHelper という include すると task というクラスマクロが与えられる以下のようなモジュールがあります。
 module TryOver3::TaskHelper
   def self.included(klass)
     klass.define_singleton_method(:task) do |name, &task_block|
@@ -149,7 +149,7 @@ end
 #
 # クラスのrunメソッドを使ったケース
 # irb(main):001:0> TryOver3::A5Task::Foo.run
-# Warning: TryOver3::A5Task::Foo.run is duplicated
+# Warning: TryOver3::A5Task::Foo.run is deprecated
 # start 2020-01-07 18:03:10 +0900
 # finish 2020-01-07 18:03:10 +0900
 # => "foo"
