@@ -22,3 +22,22 @@
 # 4. クラスメソッドsettingは、引数を2つ取り、1つ目がキー名、2つ目が設定する値です
 #     1. settingメソッドに渡された値は、インスタンスメソッド `settings` から返されるオブジェクトに、メソッド名としてアクセスすることで取り出すことができます
 #     2. e.g. クラス内で `setting :name, 'bot'` と実行した場合は、respondメソッドに渡されるブロックのスコープ内で `settings.name` の戻り値は `bot` の文字列になります
+
+require 'ostruct'
+
+class SimpleBot
+  class << self
+    attr_accessor :settings
+
+    def setting(attribute, val)
+      self.settings ||= OpenStruct.new
+      self.settings[attribute] = val
+    end
+
+    def respond(key, &block)
+      define_method(:ask) do |ask_keyword|
+        return block.call if key == ask_keyword
+      end
+    end
+  end
+end
