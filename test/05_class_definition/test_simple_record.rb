@@ -68,4 +68,16 @@ class TestSimpleRecord < MiniTest::Test
     assert_equal name, obj.name
     assert_equal desc, obj.description
   end
+
+  class Product2
+    include SimpleModel
+    attr_accessor :name
+    attr_accessor :description
+  end
+
+  def test_accessor2
+    obj = Product2.new(name: 'SmarterHR', description: 'more smart SmartHR')
+    assert_equal 'SmarterHR', obj.name
+    assert_equal 'more smart SmartHR', obj.description
+  end
 end
