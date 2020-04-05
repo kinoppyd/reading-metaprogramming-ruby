@@ -68,4 +68,25 @@ class TestSimpleRecord < MiniTest::Test
     assert_equal name, obj.name
     assert_equal desc, obj.description
   end
+
+  class MultipleAccessorsProduct
+    include SimpleModel
+
+    attr_accessor :name
+    attr_accessor :description
+  end
+
+  def test_accessor
+    obj = MultipleAccessorsProduct.new(name: 'SmarterHR', description: 'more smart SmartHR')
+    assert_equal 'SmarterHR', obj.name
+    assert_equal 'more smart SmartHR', obj.description
+  end
+
+  def test_writer
+    obj = MultipleAccessorsProduct.new(name: 'SmarterHR', description: 'more smart SmartHR')
+    obj.name = 'Ultra SmarterHR'
+    obj.description = 'more smart SmarterHR'
+    assert_equal 'Ultra SmarterHR', obj.name
+    assert_equal 'more smart SmarterHR', obj.description
+  end
 end
