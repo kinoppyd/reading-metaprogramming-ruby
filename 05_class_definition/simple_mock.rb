@@ -38,26 +38,31 @@
 # obj.called_times(:imitated_method) #=> 2
 # ```
 module SimpleMock
-  def initialize
-    @method_called_hash = {}
-  end
   
   def expects(method_name, return_value)
     define_singleton_method(method_name) do
-      @method_called_hash[method_name] += 1 if @method_called_hash.key?(:method_name)
+      method_called_hash[method_name] += 1 if method_called_hash.key?(:method_name)
       return_value
     end
   end
 
   def watch(method_name)
-    @method_called_hash[method_name] = 0
+    method_called_hash[method_name] = 0
   end
 
   def called_times(method_name)
-    @method_called_hash[method_name]
+    method_called_hash[method_name]
+  end
+
+  def method_called_hash
+    @method_called_hash ||= {}
   end
 
   class << self
+    def new
+      Class.new.extend(self)
+    end
+
     def mock(obj)
       obj.extend(self)
     end
