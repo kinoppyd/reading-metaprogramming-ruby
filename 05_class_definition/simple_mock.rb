@@ -41,7 +41,7 @@ module SimpleMock
   
   def expects(method_name, return_value)
     define_singleton_method(method_name) do
-      method_called_hash[method_name] += 1 if method_called_hash.key?(:method_name)
+      method_called_hash[method_name] += 1 if method_called_hash.key?(method_name)
       return_value
     end
   end
@@ -64,6 +64,15 @@ module SimpleMock
     end
 
     def mock(obj)
+      # obj.public_methods(false).each do |method_name|
+      #   obj.define_singleton_method(method_name) do
+      #     if method_called_hash.key?(:method_name)
+      #       method_called_hash[method_name] += 1 
+      #     end
+      #     obj.send(method_name)
+      #   end
+      # end
+
       obj.extend(self)
     end
   end
