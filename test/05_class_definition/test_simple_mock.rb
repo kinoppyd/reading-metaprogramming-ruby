@@ -64,7 +64,7 @@ class TestSimpleMock < MiniTest::Test
     obj.watch(:imitated_method)
 
     assert_equal('hoge', obj.imitated_method)
-    obj.imitated_method
+    assert_equal('hoge', obj.imitated_method)
 
     assert_equal 2, obj.called_times(:imitated_method)
   end
