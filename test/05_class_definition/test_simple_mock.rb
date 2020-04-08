@@ -27,7 +27,7 @@ class TestSimpleMock < MiniTest::Test
     assert_equal obj.imitated_method, expected
   end
 
-  def test_mock_retuns_setted_value_when_extended
+  def test_mock_returns_setted_value_when_extended
     obj = ClassForMockTest.new
     SimpleMock.mock(obj)
     expected = SecureRandom.hex
@@ -53,6 +53,17 @@ class TestSimpleMock < MiniTest::Test
     obj.watch(:imitated_method)
 
     obj.imitated_method
+    obj.imitated_method
+
+    assert_equal 2, obj.called_times(:imitated_method)
+  end
+
+  def test_mock_returns_value_and_counts_how_many_times
+    obj = SimpleMock.new
+    obj.expects(:imitated_method, 'hoge')
+    obj.watch(:imitated_method)
+
+    assert_equal('hoge', obj.imitated_method)
     obj.imitated_method
 
     assert_equal 2, obj.called_times(:imitated_method)

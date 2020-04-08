@@ -33,7 +33,7 @@
 # obj = SimpleMock.new
 # obj.expects(:imitated_method, true)
 # obj.watch(:imitated_method)
-# obj.imitated_method
-# obj.imitated_method
+# obj.imitated_method #=> true
+# obj.imitated_method #=> true
 # obj.called_times(:imitated_method) #=> 2
 # ```
