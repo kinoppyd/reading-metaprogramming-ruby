@@ -37,3 +37,36 @@
 # obj.imitated_method
 # obj.called_times(:imitated_method) #=> 2
 # ```
+module SimpleMock
+  def expects(method_name, return_value)
+    define_singleton_method(method_name) do
+      method_called_hash[method_name] += 1 if method_called_hash.key?(method_name)
+      return_value
+    end
+  end
+
+  def watch(method_name)
+    method_called_hash[method_name] = 0
+  end
+
+  def called_times(method_name)
+    method_called_hash[method_name]
+  end
+
+  def method_called_hash
+    @method_called_hash ||= {}
+  end
+
+  class << self
+    def new
+      Class.new.extend(self)
+    end
+
+    def mock(obj)
+      orig_methods = obj.public_methods(false)
+      obj.extend(self)
+      orig_methods.each { |method_name| obj.expects(method_name, obj.send(method_name)) }
+      obj
+    end
+  end
+end

@@ -23,5 +23,5 @@ jobs:
         bundle exec ruby -Itest test/02_object_model/*.rb
         bundle exec ruby -Itest test/03_method/*.rb
         bundle exec ruby -Itest test/04_block/*.rb
-        bundle exec ruby -Itest test/05_class_definition/test_simple_record.rb
+        bundle exec ruby -Itest test/05_class_definition/*.rb
         # bundle exec rake
