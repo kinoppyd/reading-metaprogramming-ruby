@@ -19,9 +19,9 @@ jobs:
         bundle install --jobs 4 --retry 3
     - name: Run Test
       run: |
-        bundle exec ruby -Itest test/00_setup/test_try_out.rb
-        bundle exec ruby -Itest test/02_object_model/*.rb
-        bundle exec ruby -Itest test/03_method/*.rb
-        bundle exec ruby -Itest test/04_block/*.rb
-        bundle exec ruby -Itest test/05_class_definition/*.rb
-        # bundle exec rake
+        bundle exec rake
+        # bundle exec ruby -Itest test/00_setup/test_try_out.rb
+        # bundle exec ruby -Itest test/02_object_model/*.rb
+        # bundle exec ruby -Itest test/03_method/*.rb
+        # bundle exec ruby -Itest test/04_block/*.rb
+        # bundle exec ruby -Itest test/05_class_definition/*.rb

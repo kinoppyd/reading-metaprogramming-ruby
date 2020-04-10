@@ -33,8 +33,8 @@
 # obj = SimpleMock.new
 # obj.expects(:imitated_method, true)
 # obj.watch(:imitated_method)
-# obj.imitated_method
-# obj.imitated_method
+# obj.imitated_method #=> true
+# obj.imitated_method #=> true
 # obj.called_times(:imitated_method) #=> 2
 # ```
 module SimpleMock
@@ -52,6 +52,8 @@ module SimpleMock
   def called_times(method_name)
     method_called_hash[method_name]
   end
+
+  private
 
   def method_called_hash
     @method_called_hash ||= {}
