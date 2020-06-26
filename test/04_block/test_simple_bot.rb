@@ -50,4 +50,20 @@ class TestSimpleBot < MiniTest::Test
 
     assert_equal "code is #{code}", klass.new.ask('tell me your code')
   end
+
+  def test_global_setting_multiple_call
+    klass = bot_for_test do
+      setting :name, 'bot'
+      setting :age, 10
+      respond 'what is your name?' do
+        "i'm #{settings.name}"
+      end
+      respond 'how old are you?' do
+        "i'm #{settings.age} years old"
+      end
+    end
+
+    assert_equal "i'm bot", klass.new.ask("what is your name?")
+    assert_equal "i'm 10 years old", klass.new.ask("how old are you?")
+  end
 end
