@@ -89,4 +89,25 @@ class TestEvilMailbox < MiniTest::Test
       assert_equal false, secret_string == mb.instance_variable_get(iv)
     end
   end
+
+  def evil_mailbox_with_secret_string(secret_string, &block)
+    mock = MiniTest::Mock.new
+    mock.instance_eval(&block) if block_given? 
+    [EvilMailbox.new(mock, secret_string), mock]
+  end
+
+  def test_send_mail_exec_block_with_result_true_and_secret_string
+    secret_string = SecureRandom.hex
+    mb, mock = evil_mailbox_with_secret_string(secret_string) do
+      expect :auth, true, [String]
+      expect :send_mail, true, ["ppyd", "hello#{secret_string}"]
+    end
+
+    ret = nil
+    mb.send_mail("ppyd", "hello") do |res|
+      ret = res
+    end
+    mock.verify
+    assert_equal true, ret
+  end
 end
