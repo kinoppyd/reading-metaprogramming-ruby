@@ -85,7 +85,7 @@ class TestTryOver03Q1 < Minitest::Test
     assert_equal("foo", TryOver3::A5Task.foo)
   end
 
-  def test_q5_task_heloer_not_exists_class
+  def test_q5_task_helper_not_exists_class
     skip
     refute_includes TryOver3::A5Task.constants, :Foo
   end
