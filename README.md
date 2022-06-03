@@ -1,6 +1,6 @@
 # reading-metaprogramming-ruby
 
-![](https://github.com/canisterism/reading-metaprogramming-ruby/workflows/Ruby/badge.svg?branch=<solved>)
+![](https://github.com/canisterism/reading-metaprogramming-ruby/workflows/Ruby/badge.svg?branch=solved)
 
 ようこそ！　メタプログラミングRuby第2版の読書会のためのリポジトリです！
 この読書会の目的は、常に(☝ ՞ਊ ՞)☝のバッジをグリーンに保つことです！
