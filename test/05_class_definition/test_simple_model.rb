@@ -2,7 +2,7 @@ require 'test_helper'
 require 'simple_model'
 require 'securerandom'
 
-class TestSimpleRecord < MiniTest::Test
+class TestSimpleModel < MiniTest::Test
   class Product
     include SimpleModel
 
