@@ -1,8 +1,7 @@
 require 'test_helper'
-require 'hoge_everywhere'
 require 'hoge'
 
-class TestObjectModel < MiniTest::Test
+class TestHoge < MiniTest::Test
   def test_hoge_in_string
     assert_equal "hoge","hoge".hoge
   end
