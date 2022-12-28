@@ -1,6 +1,6 @@
 require 'test_helper'
 require 'securerandom'
-require 'method_first_step'
+require '01_method_first_step'
 
 class TestMethodFirstStep < MiniTest::Test
   def test_hello

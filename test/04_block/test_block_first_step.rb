@@ -10,7 +10,7 @@ class AcceptBlock
   end
 end
 
-require 'block_first_step'
+require '01_block_first_step'
 
 class TestBlockFirstStep < MiniTest::Test
   def test_my_math

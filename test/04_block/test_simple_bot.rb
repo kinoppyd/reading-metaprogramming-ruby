@@ -1,6 +1,6 @@
 require 'test_helper'
 require 'securerandom'
-require 'simple_bot'
+require '03_simple_bot'
 
 class TestSimpleBot < MiniTest::Test
   def bot_for_test(&block)

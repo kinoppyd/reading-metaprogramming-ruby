@@ -1,5 +1,5 @@
 require "test_helper"
-require "try_over3_3"
+require "03_try_over3_3"
 
 class TestTryOver03Q1 < Minitest::Test
   def test_q1_called_run_test

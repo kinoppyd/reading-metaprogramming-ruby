@@ -1,5 +1,5 @@
 require 'test_helper'
-require 'hierarchy'
+require '02_hierarchy'
 
 class TestHierarchy < MiniTest::Test
   def test_c1_ancestors

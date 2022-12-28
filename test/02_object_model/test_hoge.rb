@@ -1,5 +1,5 @@
 require 'test_helper'
-require 'hoge'
+require '01_hoge'
 
 class TestHoge < MiniTest::Test
   def test_hoge_in_string

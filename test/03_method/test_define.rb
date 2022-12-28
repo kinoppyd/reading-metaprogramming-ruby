@@ -1,5 +1,5 @@
 require 'test_helper'
-require 'define'
+require '02_define'
 require 'securerandom'
 
 class TestDefine < MiniTest::Test

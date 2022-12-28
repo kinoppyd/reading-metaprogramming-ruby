@@ -1,11 +1,11 @@
 require 'test_helper'
-require 'evil_mailbox'
+require '02_evil_mailbox'
 require 'securerandom'
 
 class TestEvilMailbox < MiniTest::Test
   def evil_mailbox(&block)
     mock = MiniTest::Mock.new
-    mock.instance_eval(&block) if block_given? 
+    mock.instance_eval(&block) if block_given?
     [EvilMailbox.new(mock), mock]
   end
 
@@ -92,7 +92,7 @@ class TestEvilMailbox < MiniTest::Test
 
   def evil_mailbox_with_secret_string(secret_string, &block)
     mock = MiniTest::Mock.new
-    mock.instance_eval(&block) if block_given? 
+    mock.instance_eval(&block) if block_given?
     [EvilMailbox.new(mock, secret_string), mock]
   end
 

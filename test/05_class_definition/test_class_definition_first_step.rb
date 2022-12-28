@@ -33,7 +33,7 @@ class ExOver
   end
 end
 
-require 'class_definition_first_step'
+require '01_class_definition_first_step'
 
 class TestClassDefinitionFirstStep < MiniTest::Test
   def test_judgement

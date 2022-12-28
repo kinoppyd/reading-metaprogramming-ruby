@@ -1,5 +1,5 @@
 require 'test_helper'
-require 'simple_mock'
+require '02_simple_mock'
 require 'securerandom'
 
 class TestSimpleMock < MiniTest::Test

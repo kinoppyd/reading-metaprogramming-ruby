@@ -1,5 +1,5 @@
 require 'test_helper'
-require 'simple_model'
+require '01_simple_model'
 require 'securerandom'
 
 class TestSimpleModel < MiniTest::Test
