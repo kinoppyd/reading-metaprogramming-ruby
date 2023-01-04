@@ -1,5 +1,5 @@
 require 'test_helper'
-require 'try_out'
+require '01_try_out'
 
 class TestTryOut < MiniTest::Test
   def test_first_last_name
