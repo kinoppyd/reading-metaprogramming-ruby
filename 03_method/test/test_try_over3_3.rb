@@ -81,22 +81,22 @@ class TestTryOver03Q1 < Minitest::Test
   end
 
   def test_q5_task_helper_call_method
-    skip
+    skip unless ENV["CI"]
     assert_equal("foo", TryOver3::A5Task.foo)
   end
 
   def test_q5_task_helper_not_exists_class
-    skip
+    skip unless ENV["CI"]
     refute_includes TryOver3::A5Task.constants, :Foo
   end
 
   def test_q5_task_helper_call_class
-    skip
+    skip unless ENV["CI"]
     assert_equal("foo", TryOver3::A5Task::Foo.run)
   end
 
   def test_q5_task_helper_call_class_with_warn
-    skip
+    skip unless ENV["CI"]
     _, err = capture_io do
       TryOver3::A5Task::Foo.run
     end
