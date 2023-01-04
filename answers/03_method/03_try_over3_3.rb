@@ -1,10 +1,9 @@
 TryOver3 = Module.new
-# Q1
-# 以下要件を満たすクラス TryOver3::A1 を作成してください。
-# - run_test というインスタンスメソッドを持ち、それはnilを返す
-# - `test_` から始まるインスタンスメソッドが実行された場合、このクラスは `run_test` メソッドを実行する
-# - `test_` メソッドがこのクラスに実装されていなくても `test_` から始まるメッセージに応答することができる
-# - TryOver3::A1 には `test_` から始まるインスタンスメソッドが定義されていない
+# Q1. 問題の解説
+#
+# method_missingを利用してゴーストメソッドを作る問題です。
+# respond_to_missing?はなくてもテストはパスしますが、method_missingを作るときにはセットで
+# 定義しておくのがお作法なので回答例にはrespond_to_missing?も定義しています。
 #
 class TryOver3::A1
   def run_test
@@ -23,10 +22,11 @@ class TryOver3::A1
   end
 end
 
-# Q2
-# 以下要件を満たす TryOver3::A2Proxy クラスを作成してください。
-# - TryOver3::A2Proxy は initialize に TryOver3::A2 のインスタンスを受け取り、それを @source に代入する
-# - TryOver3::A2Proxy は、@sourceに定義されているメソッドが自分自身に定義されているように振る舞う
+# Q2. 問題の解説
+#
+# method_missingとsendを使って動的プロキシを作る問題です。
+# Q1と違い、こちらはrespond_to_missing?がないとテストが失敗します。
+#
 class TryOver3::A2
   def initialize(name, value)
     instance_variable_set("@#{name}", value)
@@ -48,11 +48,12 @@ class TryOver3::A2Proxy
   end
 end
 
-# Q3
-# 前回 OriginalAccessor の my_attr_accessor で定義した getter/setter に boolean の値が入っている場合には #{name}? が定義されるようなモジュールを実装しました。
-# 今回は、そのモジュールに boolean 以外が入っている場合には hoge? メソッドが存在しないようにする変更を加えてください。
-# （以下は god の模範解答を一部変更したものです。以下のコードに変更を加えてください）
-# メソッド生えちゃだめなのか…
+# Q3.
+# Module#remove_methodを利用するとメソッドを削除できます。これを使い、
+# 「boolean 以外が入っている場合には hoge? メソッドが存在しないようにする」を実現します。
+# なお、メソッドを削除するメソッドはremove_methodの他にundef_methodも存在します。こちらでもテストはパスします。
+# remove_methodとundef_methodの違いが気になる方はドキュメントを読んでみてください。
+#
 module TryOver3::OriginalAccessor2
   def self.included(mod)
     mod.define_singleton_method :my_attr_accessor do |attr_sym|
@@ -75,13 +76,11 @@ module TryOver3::OriginalAccessor2
 end
 
 
-# Q4
-# 以下のように実行できる TryOver3::A4 クラスを作成してください。
-# TryOver3::A4.runners = [:Hoge]
-# TryOver3::A4::Hoge.run
-# # => "run Hoge"
+# Q4. 問題の解説
 #
-# これ定数定義できちゃだめなの…？
+# const_missingを利用して、runners=で定義した定数を参照したときにrunメソッドを持つオブジェクトを返すことで
+# 仕様を満たしています。回答例ではObject.newでオブジェクトを生成しましたが、runメソッドを持つオブジェクトであれば
+# どんなクラスのインスタンスでもOKです。
 #
 class TryOver3::A4
   def self.const_missing(const)
@@ -99,9 +98,16 @@ class TryOver3::A4
   end
 end
 
-# Q5. チャレンジ問題！ 挑戦する方はテストの skip を外して挑戦してみてください。
+# Q5. 問題の解説
 #
-# TryOver3::TaskHelper という include すると task というクラスマクロが与えられる以下のようなモジュールがあります。
+# これまで解いてきた問題の解法と、仕様を読み解く知識が問われる問題です。
+# 2種類の書き方で同一の処理を行うが、そのうち1つは追加でdeprecation warningを出します。
+# メソッドの実態はdefine_singleton_methodで定義し、もう1つはQ4と同様にconst_misisingを使い、
+# runメソッド実行時にsendでもともとの定義を呼びだします。
+#
+# taskで定義されていないタスク名を定数として参照したときは既存のconst_missingの処理を継続させたいので
+# superを実行しています。
+
 module TryOver3::TaskHelper
   def self.included(klass)
     klass.define_singleton_method :task do |name, &task_block|
@@ -126,7 +132,6 @@ module TryOver3::TaskHelper
   end
 end
 
-# TryOver3::TaskHelper は include することで以下のような使い方ができます
 class TryOver3::A5Task
   include TryOver3::TaskHelper
 
@@ -134,26 +139,3 @@ class TryOver3::A5Task
     "foo"
   end
 end
-# irb(main):001:0> A3Task::Foo.run
-# start 2020-01-07 18:03:10 +0900
-# finish 2020-01-07 18:03:10 +0900
-# => "foo"
-
-# 今回 TryOver3::TaskHelper では TryOver3::A5Task::Foo のように Foo クラスを作らず TryOver3::A5Task.foo のようにクラスメソッドとして task で定義された名前のクラスメソッドでブロックを実行するように変更したいです。
-# 現在 TryOver3::TaskHelper のユーザには TryOver3::A5Task::Foo.run のように生成されたクラスを使って実行しているユーザが存在します。
-# 今回変更を加えても、その人たちにはこれまで通り生成されたクラスのrunメソッドでタスクを実行できるようにしておいて、warning だけだしておくようにしたいです。
-# TryOver3::TaskHelper を修正してそれを実現してください。 なお、その際、クラスは実行されない限り生成されないものとします。
-#
-# 変更後想定する使い方
-# メソッドを使ったケース
-# irb(main):001:0> TryOver3::A5Task.foo
-# start 2020-01-07 18:03:10 +0900
-# finish 2020-01-07 18:03:10 +0900
-# => "foo"
-#
-# クラスのrunメソッドを使ったケース
-# irb(main):001:0> TryOver3::A5Task::Foo.run
-# Warning: TryOver3::A5Task::Foo.run is deprecated
-# start 2020-01-07 18:03:10 +0900
-# finish 2020-01-07 18:03:10 +0900
-# => "foo"

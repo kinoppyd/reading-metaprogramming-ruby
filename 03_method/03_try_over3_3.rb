@@ -19,10 +19,12 @@ class TryOver3::A2
 end
 
 
-# Q3
-# 前回 OriginalAccessor の my_attr_accessor で定義した getter/setter に boolean の値が入っている場合には #{name}? が定義されるようなモジュールを実装しました。
+# Q3.
+# 02_define.rbのQ3ではOriginalAccessor の my_attr_accessor で定義した getter/setter に
+# boolean の値が入っている場合には #{name}? が定義されるようなモジュールを実装しました。
 # 今回は、そのモジュールに boolean 以外が入っている場合には hoge? メソッドが存在しないようにする変更を加えてください。
-# （以下は god の模範解答を一部変更したものです。以下のコードに変更を加えてください）
+# （以下のコードに変更を加えてください）
+#
 module TryOver3::OriginalAccessor2
   def self.included(mod)
     mod.define_singleton_method :my_attr_accessor do |attr_sym|
@@ -48,6 +50,7 @@ end
 # TryOver3::A4.runners = [:Hoge]
 # TryOver3::A4::Hoge.run
 # # => "run Hoge"
+# このとき、TryOver3::A4::Hogeという定数は定義されません。
 
 
 # Q5. チャレンジ問題！ 挑戦する方はテストの skip を外して挑戦してみてください。
@@ -78,14 +81,16 @@ class TryOver3::A5Task
     "foo"
   end
 end
-# irb(main):001:0> A3Task::Foo.run
+# irb(main):001:0> TryOver3::A3Task::Foo.run
 # start 2020-01-07 18:03:10 +0900
 # finish 2020-01-07 18:03:10 +0900
 # => "foo"
 
-# 今回 TryOver3::TaskHelper では TryOver3::A5Task::Foo のように Foo クラスを作らず TryOver3::A5Task.foo のようにクラスメソッドとして task で定義された名前のクラスメソッドでブロックを実行するように変更したいです。
+# 今回 TryOver3::TaskHelper では TryOver3::A5Task::Foo のように Foo クラスを作らず
+# TryOver3::A5Task.foo のようにクラスメソッドとして task で定義された名前のクラスメソッドでブロックを実行するように変更したいです。
 # 現在 TryOver3::TaskHelper のユーザには TryOver3::A5Task::Foo.run のように生成されたクラスを使って実行しているユーザが存在します。
-# 今回変更を加えても、その人たちにはこれまで通り生成されたクラスのrunメソッドでタスクを実行できるようにしておいて、warning だけだしておくようにしたいです。
+# 今回変更を加えても、その人たちにはこれまで通り生成されたクラスのrunメソッドでタスクを実行できるようにしておいて、
+# warning だけだしておくようにしたいです。
 # TryOver3::TaskHelper を修正してそれを実現してください。 なお、その際、クラスは実行されない限り生成されないものとします。
 #
 # 変更後想定する使い方
