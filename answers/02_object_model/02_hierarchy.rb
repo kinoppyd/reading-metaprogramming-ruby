@@ -25,10 +25,10 @@ end
 # NOTE: これより上の行は変更しないこと
 
 
-# Q1.
-# 次の動作をする C1 class を実装する
-# - C1.ancestors.first(2) が [C1, M1] となる
-# - C1.new.name が 'C1' を返す
+# Q1. 問題の解説
+#
+# M1をC1にincludeすると、継承ツリーはC1の次にM1が位置することになり、仕様を満たせます。
+#
 class C1
   include M1
 
@@ -38,23 +38,24 @@ class C1
 end
 
 
-# Q2.
-# 次の動作をする C2 class を実装する
-# - C2.ancestors.first(2) が [M1, C2] となる
-# - C2.new.name が 'M1' を返す
+# Q2. 問題の解説
+#
+# M2をC2にprependすると、継承ツリーはM2の次にC2が位置することになり、仕様を満たせます。
+#
 class C2
   prepend M1
+
   def name
     'C2'
   end
 end
 
 
-# Q3.
-# 次の動作をする C3 class, MySuperClass class を実装する
-# - C3.ancestors.first(6) が [M1, C3, M2, M3, MySuperClass, M4] となる
-# - C3.new.name が 'M1' を返す
-
+# Q3. 問題の解説
+#
+# モジュールを複数includeしたり、スーパークラスを明示的に定義したときの
+# 継承ツリーがどうなるかの理解を問う問題です
+#
 class MySuperClass
   include M4
 end
@@ -63,25 +64,23 @@ class C3 < MySuperClass
   prepend M1
   include M3
   include M2
+
   def name
     'C3'
   end
 end
 
 
-# Q4.
-# 次の動作をする C4 class のメソッド increment を実装する
-# - increment メソッドを呼ぶと value が +1 される
-# - また、increment メソッドは value を文字列にしたものを返す
-#   c4 = C4.new
-#   c4.increment # => "1"
-#   c4.increment # => "2"
-#   c4.increment # => "3"
-# - 定義済みのメソッド (value, value=) は private のままとなっている
+# Q4. 問題の解説
+#
+# privateメソッドとして定義していると、レシーバを明示的に指定したメソッド呼び出しができません。
+# しかしこれには例外があり、レシーバがselfであれば問題ありません。
+# この仕様はRuby2.7からのものであり、2.7未満はセッターメソッド(=が末尾についているもの)のみがselfをつけて呼び出し可能でした。
+# メソッド形式を使わず@valueのようにインスタンス変数を直接扱ってもテストは通るので、それでもOKです。
 class C4
   def increment
-    @value ||= 0
-    self.value = value + 1
+    self.value ||= 0
+    self.value += 1
     value.to_s
   end
   private
@@ -89,12 +88,10 @@ class C4
   attr_accessor :value
 end
 
-# Q5.
-# 次の動作をする M1Refinements module を実装する
-# - M1Refinements は M1 の name インスタンスメソッドをリファインし,
-#   リファインされた name メソッドは "Refined M1" を返す
-# - C5.new.another_name が文字列 "M1" を返す
-# - C5.new.other_name が文字列 "Refined M1" を返す
+# Q5. 問題の解説
+#
+# refinementsの練習問題です。
+# refineしたメソッドの影響範囲はusingがクラス内であれば、そのusingしたクラス内でのみ、かつusing以降の行です。
 module M1Refinements
   refine M1 do
     def name
@@ -118,10 +115,12 @@ class C5
 end
 
 
-# Q6.
-# 次の動作をする C6 class を実装する
-# - M1Refinements は Q5 で実装したものをそのまま使う
-# - C6.new.name が 'Refined M1' を返すように C6 に name メソッドを実装する
+# Q6. 問題の解説
+#
+# Q5の解説でも書いたように、refineしたメソッドの影響範囲はusingがクラス内であれば、そのusingしたクラス内でのみ、かつusing以降の行です。
+# なので、問題として用意したコードのままだとなにもrefineされず、もともとのC6#nameは'M1'を返します。
+# using以降の行でM1#nameを呼び出すC6#nameを定義するとrefineした実装が呼び出されます。
+#
 class C6
   include M1
   using M1Refinements
