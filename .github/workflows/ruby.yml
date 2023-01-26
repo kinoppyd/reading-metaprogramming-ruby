@@ -4,24 +4,19 @@ on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v1
-    - name: Set up Ruby 2.6
-      uses: actions/setup-ruby@v1
-      with:
-        ruby-version: 2.6.x
-    - name: Install Dependencies
-      run: |
-        gem install bundler
-        bundle install --jobs 4 --retry 3
-    - name: Run Test
-      run: |
-        bundle exec rake
-        # bundle exec ruby -Itest test/00_setup/test_try_out.rb
-        # bundle exec ruby -Itest test/02_object_model/*.rb
-        # bundle exec ruby -Itest test/03_method/*.rb
-        # bundle exec ruby -Itest test/04_block/*.rb
-        # bundle exec ruby -Itest test/05_class_definition/*.rb
+      - uses: actions/checkout@v3
+      - name: Set up Ruby 2.7
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7
+          bundler-cache: true
+      - name: Run Test
+        run: |
+          bundle exec rake
+          # bundle exec ruby -Itest test/00_setup/test_try_out.rb
+          # bundle exec ruby -Itest test/02_object_model/*.rb
+          # bundle exec ruby -Itest test/03_method/*.rb
+          # bundle exec ruby -Itest test/04_block/*.rb
+          # bundle exec ruby -Itest test/05_class_definition/*.rb
