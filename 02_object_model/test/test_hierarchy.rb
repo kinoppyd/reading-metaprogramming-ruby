@@ -79,5 +79,10 @@ class TestHierarchy < MiniTest::Test
 
   def test_c6_name
     assert_equal "Refined M1", C6.new.name
+
+    C6.include(Module.new do
+      def name = "other"
+    end)
+    assert_equal "other", C6.new.name
   end
 end
