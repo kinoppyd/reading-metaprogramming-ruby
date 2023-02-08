@@ -67,6 +67,7 @@ end
 #   c4.increment # => "2"
 #   c4.increment # => "3"
 # - 定義済みのメソッド (value, value=) は private のままとなっている
+# - incrementメソッド内で value, value=を利用する
 class C4
   private
 
