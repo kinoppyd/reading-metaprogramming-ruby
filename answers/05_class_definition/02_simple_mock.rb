@@ -49,8 +49,9 @@ module SimpleMock
     (@counter ||= {})[name] = 0
 
     return if @expects&.include?(name.to_sym)
+
     define_singleton_method(name) do
-      @counter[name] += 1 if @counter&.key?(name)
+      @counter[name] += 1
     end
   end
 
