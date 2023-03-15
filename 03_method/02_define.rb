@@ -47,16 +47,10 @@ module OriginalAccessor
       base.define_method("#{name}=") do |val|
         @name = val
         if val.class == TrueClass || val.class == FalseClass
-<<<<<<< HEAD
           # うーん、ここでどう定義すべきかわからん
           # base.define_method("#{name}?") do
           #   !!@name
           # end
-=======
-          base.define_singleton_method("#{name}?") do
-            !!@name
-          end
->>>>>>> 7620b12 (02_define.rbの解答)
         end
       end
     end
