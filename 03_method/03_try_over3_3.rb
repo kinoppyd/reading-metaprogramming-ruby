@@ -22,19 +22,19 @@ end
 # Q3.
 # 02_define.rbのQ3ではOriginalAccessor の my_attr_accessor で定義した getter/setter に
 # boolean の値が入っている場合には #{name}? が定義されるようなモジュールを実装しました。
-# 今回は、そのモジュールに boolean 以外が入っている場合には hoge? メソッドが存在しないようにする変更を加えてください。
+# 今回は、そのモジュールに boolean 以外が入っている場合には #{name}? メソッドが存在しないようにする変更を加えてください。
 # （以下のコードに変更を加えてください）
 #
 module TryOver3::OriginalAccessor2
   def self.included(mod)
-    mod.define_singleton_method :my_attr_accessor do |attr_sym|
-      define_method attr_sym do
+    mod.define_singleton_method :my_attr_accessor do |name|
+      define_method name do
         @attr
       end
 
-      define_method "#{attr_sym}=" do |value|
-        if [true, false].include?(value) && !respond_to?("#{attr_sym}?")
-          self.class.define_method "#{attr_sym}?" do
+      define_method "#{name}=" do |value|
+        if [true, false].include?(value) && !respond_to?("#{name}?")
+          self.class.define_method "#{name}?" do
             @attr == true
           end
         end
