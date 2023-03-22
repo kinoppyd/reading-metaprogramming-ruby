@@ -9,7 +9,7 @@ class TryOver3::A1
   def run_test
   end
 
-  def method_missing(name, *args)
+  def method_missing(name, *)
     if name.to_s.start_with?('test_')
       run_test
     else
@@ -17,7 +17,7 @@ class TryOver3::A1
     end
   end
 
-  def respond_to_missing?(name)
+  def respond_to_missing?(name, _)
     name.to_s.start_with?('test_')
   end
 end
@@ -39,8 +39,8 @@ class TryOver3::A2Proxy
     @source = source
   end
 
-  def method_missing(name, *args)
-    @source.send(name, *args)
+  def method_missing(...)
+    @source.send(...)
   end
 
   def respond_to_missing?(name, include_all)
