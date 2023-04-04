@@ -8,6 +8,7 @@ class TestDefine < MiniTest::Test
     class A3
       include OriginalAccessor
       my_attr_accessor :hoge
+      my_attr_accessor :fuga
     end
   rescue
   end
@@ -115,5 +116,13 @@ class TestDefine < MiniTest::Test
     instance.hoge = false
     assert_equal true, instance.methods.include?(:hoge?)
     assert_equal false, instance.hoge?
+  end
+
+  def test_answer_a3_multiple
+    instance = A3.new
+    instance.hoge = "hoge"
+    instance.fuga = "fuga"
+    assert_equal "hoge", instance.hoge
+    assert_equal "fuga", instance.fuga
   end
 end

@@ -9,7 +9,7 @@ class TryOver3::A1
   def run_test
   end
 
-  def method_missing(name, *args)
+  def method_missing(name, *)
     if name.to_s.start_with?('test_')
       run_test
     else
@@ -17,7 +17,7 @@ class TryOver3::A1
     end
   end
 
-  def respond_to_missing?(name)
+  def respond_to_missing?(name, _)
     name.to_s.start_with?('test_')
   end
 end
@@ -39,8 +39,8 @@ class TryOver3::A2Proxy
     @source = source
   end
 
-  def method_missing(name, *args)
-    @source.send(name, *args)
+  def method_missing(...)
+    @source.send(...)
   end
 
   def respond_to_missing?(name, include_all)
@@ -50,24 +50,24 @@ end
 
 # Q3.
 # Module#remove_methodを利用するとメソッドを削除できます。これを使い、
-# 「boolean 以外が入っている場合には hoge? メソッドが存在しないようにする」を実現します。
+# 「boolean 以外が入っている場合には #{name}? メソッドが存在しないようにする」を実現します。
 # なお、メソッドを削除するメソッドはremove_methodの他にundef_methodも存在します。こちらでもテストはパスします。
 # remove_methodとundef_methodの違いが気になる方はドキュメントを読んでみてください。
 #
 module TryOver3::OriginalAccessor2
   def self.included(mod)
-    mod.define_singleton_method :my_attr_accessor do |attr_sym|
-      define_method attr_sym do
+    mod.define_singleton_method :my_attr_accessor do |name|
+      define_method name do
         @attr
       end
 
-      define_method "#{attr_sym}=" do |value|
-        if [true, false].include?(value) && !respond_to?("#{attr_sym}?")
-          self.class.define_method "#{attr_sym}?" do
+      define_method "#{name}=" do |value|
+        if [true, false].include?(value) && !respond_to?("#{name}?")
+          self.class.define_method "#{name}?" do
             @attr == true
           end
         else
-          mod.remove_method "#{attr_sym}?" if respond_to? "#{attr_sym}?"
+          mod.remove_method "#{name}?" if respond_to? "#{name}?"
         end
         @attr = value
       end

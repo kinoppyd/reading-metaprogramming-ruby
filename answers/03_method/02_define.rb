@@ -45,17 +45,19 @@ end
 # 3章にはまだ登場していない概念ですが、includedフックを利用してモジュールがincludeされたときの振る舞いを記述しています。
 # my_attr_accessorメソッドはクラスメソッドに相当するため、includedメソッドの引数として渡されてきたクラスに直接define_singleton_methodでメソッドを追加しています。
 # さらにmy_attr_accessorメソッド実行時にインスタンスメソッドを追加するためにdefine_methodを利用しています。
+# セッターで定義した値を格納するために`@my_attr_accessor`をハッシュとして定義して利用しています。
 # `?`つきのメソッドを定義するために、セッター実行時にdefine_aingleton_methodでメソッドを追加しています。
 #
 module OriginalAccessor
   def self.included(base)
     base.define_singleton_method(:my_attr_accessor) do |attr|
       base.define_method attr do
-        @attr
+        @my_attr_accessor&.fetch(attr) { nil }
       end
 
       base.define_method "#{attr}=" do |value|
-        @attr = value
+        (@my_attr_accessor ||= {})[attr] = value
+
         if value.is_a?(TrueClass) || value.is_a?(FalseClass)
           define_singleton_method "#{attr}?" do
             !!value

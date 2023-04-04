@@ -1,43 +1,30 @@
-# 次の仕様を満たすモジュール SimpleMock を作成してください
+# 問題の解説
+# まずmockメソッドの実装から考えます。「もとのオブジェクトの能力が失われてはいけない」という仕様から、引数として受け付けたオブジェクトに
+# SimpleMockをextendすることでモック化に必要なメソッドであるexpects, watch, called_timesを追加するようにします。
 #
-# SimpleMockは、次の2つの方法でモックオブジェクトを作成できます
-# 特に、2の方法では、他のオブジェクトにモック機能を付与します
-# この時、もとのオブジェクトの能力が失われてはいけません
-# また、これの方法で作成したオブジェクトを、以後モック化されたオブジェクトと呼びます
-# 1.
-# ```
-# SimpleMock.new
-# ```
+# expectsメソッドを実行したとき、レシーバとなるオブジェクトにだけメソッドを追加したいのでdefine_singleton_methodを利用して動的にメソッドを追加します。
+# メソッドの内容は、次のようにexpectsメソッドに続けてwatchメソッドが実行されたときに備えて、
+# カウンター用のインスタンス変数`@counter`(キーがexpectsで指定されたメソッド名、値が実行回数のハッシュ)を用意して
+# watchが実行されていたら(つまり対応する`@counter`の値があれば)それをインクリメントするようにします。
 #
-# 2.
-# ```
-# obj = SomeClass.new
-# SimpleMock.mock(obj)
-# ```
+# ```ruby
+# obj = Object.new
+# obj = SimpleMock(obj)
+# obj.expects(:hoge, true)
+# obj.watch(:hoge)
+# obj.hoge #=> true
+# ````
 #
-# モック化したオブジェクトは、expectsメソッドに応答します
-# expectsメソッドには2つの引数があり、それぞれ応答を期待するメソッド名と、そのメソッドを呼び出したときの戻り値です
-# ```
-# obj = SimpleMock.new
-# obj.expects(:imitated_method, true)
-# obj.imitated_method #=> true
-# ```
-# モック化したオブジェクトは、expectsの第一引数に渡した名前のメソッド呼び出しに反応するようになります
-# そして、第2引数に渡したオブジェクトを返します
+# また、watchを実行したときにexpects経由で定義したメソッドを上書きしないように、expectsしたメソッド名を`@expects`に配列として保存しておきます。
+# watchでは`@expects`を見て、すでにexpectsで定義済みであればメソッドを上書きしないようにします。
+# そうしないとwatchメソッドを実行したときに、モックメソッドの戻り値の情報が失われてしまいます。
 #
-# モック化したオブジェクトは、watchメソッドとcalled_timesメソッドに応答します
-# これらのメソッドは、それぞれ1つの引数を受け取ります
-# watchメソッドに渡した名前のメソッドが呼び出されるたび、モック化したオブジェクトは内部でその回数を数えます
-# そしてその回数は、called_timesメソッドに同じ名前の引数が渡された時、その時点での回数を参照することができます
-# ```
-# obj = SimpleMock.new
-# obj.expects(:imitated_method, true)
-# obj.watch(:imitated_method)
-# obj.imitated_method #=> true
-# obj.imitated_method #=> true
-# obj.called_times(:imitated_method) #=> 2
-# ```
-
+# 次にnewメソッドの実装を考えます。仕様から、SimpleMockはモジュールであることを求められていますが、
+# 同時にモジュールには存在しないnewメソッドを持つようにも求められています。
+# これを、クラスメソッドのnewを明示的に定義することで満たします。このとき何らかのオブジェクトをmockメソッドの引数にして、
+# 戻り値を返すようにすれば要件は満たせますが、モック用のオブジェクトとしては余計なメソッドをなるべく持たない方が扱いやすいので、
+# Object.newをmockメソッドの引数にしています。
+#
 module SimpleMock
   def self.mock(obj)
     obj.extend(SimpleMock)
@@ -62,8 +49,9 @@ module SimpleMock
     (@counter ||= {})[name] = 0
 
     return if @expects&.include?(name.to_sym)
+
     define_singleton_method(name) do
-      @counter[name] += 1 if @counter&.key?(name)
+      @counter[name] += 1
     end
   end
 
