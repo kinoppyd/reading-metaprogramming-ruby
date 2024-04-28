@@ -8,9 +8,9 @@ jobs:
     env:
       CI: true
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - uses: ruby/setup-ruby@v1
     - name: Build and test with Rake
       run: |
-        bundle install --jobs 4 --retry 3        
+        bundle install --jobs 4 --retry 3
         bundle exec rake
