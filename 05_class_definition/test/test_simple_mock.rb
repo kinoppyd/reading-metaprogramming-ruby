@@ -2,7 +2,7 @@ require 'test_helper'
 require '02_simple_mock'
 require 'securerandom'
 
-class TestSimpleMock < MiniTest::Test
+class TestSimpleMock < Minitest::Test
   class ClassForMockTest
     def hoge; "hoge"; end
   end

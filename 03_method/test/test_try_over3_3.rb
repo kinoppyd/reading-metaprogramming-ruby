@@ -4,7 +4,7 @@ require "03_try_over3_3"
 class TestTryOver03Q1 < Minitest::Test
   def test_q1_called_run_test
     a1 = TryOver3::A1.new
-    mock = MiniTest::Mock.new
+    mock = Minitest::Mock.new
     a1.stub(:run_test, mock) do
       a1.test_hoge
     end
@@ -121,4 +121,3 @@ class TestTryOver03Q1 < Minitest::Test
     end.new
   end
 end
-

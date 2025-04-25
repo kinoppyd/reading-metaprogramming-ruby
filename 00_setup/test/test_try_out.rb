@@ -1,7 +1,7 @@
 require 'test_helper'
 require '01_try_out'
 
-class TestTryOut < MiniTest::Test
+class TestTryOut < Minitest::Test
   def test_first_last_name
     target = TryOut.new("John", "Wick")
     assert_equal "John Wick", target.full_name
@@ -48,4 +48,3 @@ class TestTryOut < MiniTest::Test
     assert_raises (ArgumentError) {TryOut.new("John", "Milton", "Cage", "Jr")}
   end
 end
-

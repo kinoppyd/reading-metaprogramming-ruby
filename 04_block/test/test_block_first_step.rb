@@ -12,7 +12,7 @@ end
 
 require '01_block_first_step'
 
-class TestBlockFirstStep < MiniTest::Test
+class TestBlockFirstStep < Minitest::Test
   def test_my_math
     assert_equal 4, MyMath.new.two_times { 2 }
   end

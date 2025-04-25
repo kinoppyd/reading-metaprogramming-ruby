@@ -2,7 +2,7 @@ require 'test_helper'
 require 'securerandom'
 require '01_method_first_step'
 
-class TestMethodFirstStep < MiniTest::Test
+class TestMethodFirstStep < Minitest::Test
   def test_hello
     assert_equal F1.new.hello, 'hello'
   end

@@ -1,7 +1,7 @@
 require 'test_helper'
 require '01_hoge'
 
-class TestHoge < MiniTest::Test
+class TestHoge < Minitest::Test
   def test_hoge_in_string
     assert_equal "hoge","hoge".hoge
   end
