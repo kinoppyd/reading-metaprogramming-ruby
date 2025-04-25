@@ -2,7 +2,7 @@ require 'test_helper'
 require '02_define'
 require 'securerandom'
 
-class TestDefine < MiniTest::Test
+class TestDefine < Minitest::Test
 
   begin
     class A3

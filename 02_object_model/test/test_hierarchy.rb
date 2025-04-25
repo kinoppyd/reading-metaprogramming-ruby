@@ -1,7 +1,7 @@
 require 'test_helper'
 require '02_hierarchy'
 
-class TestHierarchy < MiniTest::Test
+class TestHierarchy < Minitest::Test
   def test_c1_ancestors
     assert_equal [C1, M1], C1.ancestors.first(2)
   end

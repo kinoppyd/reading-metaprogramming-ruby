@@ -2,9 +2,9 @@ require 'test_helper'
 require '02_evil_mailbox'
 require 'securerandom'
 
-class TestEvilMailbox < MiniTest::Test
+class TestEvilMailbox < Minitest::Test
   def evil_mailbox(&block)
-    mock = MiniTest::Mock.new
+    mock = Minitest::Mock.new
     mock.instance_eval(&block) if block_given?
     [EvilMailbox.new(mock), mock]
   end
@@ -58,7 +58,7 @@ class TestEvilMailbox < MiniTest::Test
 
   def test_mail_object_auth
     secret_string = SecureRandom.hex
-    mock = MiniTest::Mock.new
+    mock = Minitest::Mock.new
     mock.expect :auth, true, [String]
     EvilMailbox.new(mock, secret_string)
     mock.verify
@@ -66,7 +66,7 @@ class TestEvilMailbox < MiniTest::Test
 
   def test_send_mail_with_secret_string
     secret_string = SecureRandom.hex
-    mock = MiniTest::Mock.new
+    mock = Minitest::Mock.new
     mock.expect :auth, true, [String]
     mock.expect :send_mail, true, ["ppyd", "hello#{secret_string}"]
     mb = EvilMailbox.new(mock, secret_string)
@@ -77,7 +77,7 @@ class TestEvilMailbox < MiniTest::Test
 
   def test_no_secret_string_in_object
     secret_string = SecureRandom.hex
-    mock = MiniTest::Mock.new
+    mock = Minitest::Mock.new
     mock.expect :auth, true, [String]
     mb = EvilMailbox.new(mock, secret_string)
 
@@ -91,7 +91,7 @@ class TestEvilMailbox < MiniTest::Test
   end
 
   def evil_mailbox_with_secret_string(secret_string, &block)
-    mock = MiniTest::Mock.new
+    mock = Minitest::Mock.new
     mock.instance_eval(&block) if block_given?
     [EvilMailbox.new(mock, secret_string), mock]
   end

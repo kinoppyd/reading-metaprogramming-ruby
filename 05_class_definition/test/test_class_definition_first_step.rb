@@ -35,7 +35,7 @@ end
 
 require '01_class_definition_first_step'
 
-class TestClassDefinitionFirstStep < MiniTest::Test
+class TestClassDefinitionFirstStep < Minitest::Test
   def test_judgement
     e1 = Judgement.instance_variable_get(:@e1)
     e2 = Judgement.instance_variable_get(:@e2)
